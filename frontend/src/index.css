@@ -1,9 +1,10 @@
+
 /* Light Theme (Default) */
 .login-page3 {
   --login-bg: #f3f2f2;
   --login-color: #333;
   --login-inner-bg: #fff;
-  --login-banner-bg: #fbfbfb; /* Fallback for the banner */
+  --login-banner-bg: #fbfbfb;
   --login-input: #333;
   --login-input-border: rgba(0, 0, 0, 0.13);
   --login-input-placeholder: #999999;
@@ -11,17 +12,20 @@
   --login-btn-bg: #b08bf8;
   --login-btn-bg-hover: #9c6ef6;
 }
-[data-color-mode*='dark'] .login-page3 {
-  --login-bg:#2C3338; /* Page background color */
-  
- 
-  --login-inner-bg: #414B54 !important; /* Force the form background to match */
 
-  --login-color: #e6e6e6; /* Text color */
+/* Dark Theme */
+[data-color-mode*='dark'] .login-page3 {
+  --login-bg: #2C3338;
+  --login-inner-bg: #414B54 !important;
+  --login-color: #e6e6e6;
   --login-input: #e6e6e6;
   --login-input-border: rgba(255, 255, 255, 0.13);
   --login-input-placeholder: #888888;
   --login-btn: #fff;
   --login-btn-bg: #b08bf8;
   --login-btn-bg-hover: #9c6ef6;
+}
+
+* {
+  transition: background-color 1.3s ease, color 1.3s ease;
 }

@@ -9,16 +9,13 @@ const Footer = () => {
       }}>
       <Container maxWidth="lg">
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-          <IconButton aria-label="github" component={Link} href="https://github.com" target="_blank" sx={{ mx: 1 }}>
+          <IconButton aria-label="github" component={Link} href="https://github.com/Vignesh-72/Student-Grading-System" target="_blank" sx={{ mx: 1 }}>
             <GitHub />
-          </IconButton>
-          <IconButton aria-label="twitter" component={Link} href="https://twitter.com" target="_blank" sx={{ mx: 1 }}>
-            <Twitter />
           </IconButton>
         </Box>
         <Typography variant="body2" color="text.secondary" align="center">
           {'© '}
-          {new Date().getFullYear()} Student Grading System. All rights reserved.
+          {new Date().getFullYear()} Student Grading System
         </Typography>
       </Container>
     </Box>

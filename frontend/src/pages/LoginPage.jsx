@@ -1,26 +1,126 @@
-import React from 'react';
-import Login, { Banner, Logo, Welcome, Email, Password, Submit, ButtonAfter } from '@react-login-page/page3';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import api from '../services/api';
+import { 
+  Box, 
+  TextField, 
+  Button, 
+  CircularProgress, 
+  Typography, 
+  Container, 
+  Avatar,
+  Paper
+} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useTheme } from '@mui/material/styles';
 
 const LoginPage = () => {
-  const handleLogin = (event) => {
-    event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    console.log('Login attempt:', { email, password });
+  const navigate = useNavigate();
+  const auth = useContext(AuthContext);
+  const theme = useTheme();
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setError('Please enter both email and password.');
+      return;
+    }
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await api.post('/auth/login', { email, password });
+      
+      if (response.data.token) {
+        auth.login(response.data, response.data.token);
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <Login style={{ height: 650 }} onSubmit={handleLogin}>
-      <Banner style={{ backgroundImage: `url('/loginbg.jpeg')` }} />
-      <Logo>☄️</Logo>
-      <Welcome>Login</Welcome>
-      <Email name="email" placeholder="Email" />
-      <Password name="password" placeholder="Password" />
-      <Submit>Log in</Submit>
-      <ButtonAfter>
-        <a href="#" style={{ color: 'white' , textDecorationLine : "none" }}>Forgot Password?</a>
-      </ButtonAfter>
-    </Login>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        backgroundImage: `url(${theme.palette.mode === 'dark' ? '/blackbg.jpg' : '/whitebg.jpg'})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'background-image 1s ease-in-out',
+      }}
+    >
+      <Container component="main" maxWidth="xs">
+        <Paper 
+          elevation={6}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            p: 4,
+            borderRadius: 2,
+            // --- Add these lines for the glassy effect ---
+            backgroundColor: 'rgba(255, 255, 255, 0.06)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          {error && <Typography color="error" align="center" sx={{ mt: 2 }}>{error}</Typography>}
+          <Box component="form" noValidate onSubmit={(e) => e.preventDefault()} sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+            />
+            <Button
+              onClick={handleLogin}
+              fullWidth
+              variant="contained"
+              disabled={loading}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
+            </Button>
+          </Box>
+        </Paper>
+      </Container>
+    </Box>
   );
 };
 

@@ -1,18 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const { createCourse, enrollStudent, getCourses } = require('../controllers/courseController');
 const { protect, restrictTo } = require('../middleware/authMiddleware');
+const {
+  createCourse,
+  enrollStudent,
+  getCourses,
+  getCourseById,
+  updateCourse,
+  deleteCourse,
+} = require('../controllers/courseController');
 
-// Anyone logged in can get a list of courses
+// Routes for the base path '/'
 router.route('/')
-  .get(protect, getCourses);
+  .get(protect, getCourses)
+  .post(protect, restrictTo('teacher', 'admin'), createCourse);
 
-// Only teachers can create a new course
-router.route('/')
-  .post(protect, restrictTo('teacher'), createCourse);
+// Routes for a specific course ID
+router.route('/:id')
+  .get(protect, getCourseById)
+  .put(protect, restrictTo('admin'), updateCourse)
+  .delete(protect, restrictTo('admin'), deleteCourse);
 
-// Only teachers can enroll students in their course
+// Route for enrolling a student
 router.route('/:id/enroll')
-  .put(protect, restrictTo('teacher'), enrollStudent);
+  .put(protect, restrictTo('teacher' , 'admin'), enrollStudent);
 
 module.exports = router;
