@@ -18,14 +18,10 @@ app.use('/api/users', userRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/grades', gradeRoutes);
 
-const PORT = process.env.PORT || 5000;
-
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT} and connected to MongoDB!`);
-    });
-  })
-  .catch((error) => {
-    console.error('Failed to connect to MongoDB', error);
-  });
+  .then(() => console.log("Connected to MongoDB!"))
+  .catch((error) => console.error('Failed to connect to MongoDB', error));
+
+// Export the app for Vercel
+module.exports = app;
