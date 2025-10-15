@@ -62,24 +62,24 @@ const LoginPage = () => {
     >
       <Container component="main" maxWidth="xs">
         <Paper 
-          elevation={6}
+          elevation={12}
           sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             p: 4,
-            borderRadius: 2,
-            // --- Add these lines for the glassy effect ---
-            backgroundColor: 'rgba(255, 255, 255, 0.06)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
+            borderRadius: 4,
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.18)',
+            boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign In
           </Typography>
           {error && <Typography color="error" align="center" sx={{ mt: 2 }}>{error}</Typography>}
           <Box component="form" noValidate onSubmit={(e) => e.preventDefault()} sx={{ mt: 1 }}>
@@ -94,6 +94,8 @@ const LoginPage = () => {
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              variant="filled" // Use filled variant for better contrast
+              sx={{ '& .MuiFilledInput-root': { backgroundColor: 'rgba(255,255,255,0.08)' } }}
             />
             <TextField
               margin="normal"
@@ -107,13 +109,15 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+              variant="filled" // Use filled variant for better contrast
+              sx={{ '& .MuiFilledInput-root': { backgroundColor: 'rgba(255,255,255,0.08)' } }}
             />
             <Button
               onClick={handleLogin}
               fullWidth
               variant="contained"
               disabled={loading}
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, py: 1.5 }}
             >
               {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
             </Button>
