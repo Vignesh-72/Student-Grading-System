@@ -6,7 +6,7 @@ The application is built with a fully responsive user interface using Material-U
 
 **Live Demo**: [https://student-grading-system-frontend.vercel.app/](https://student-grading-system-frontend.vercel.app/)
 
-
+---
 
 ## Features
 
@@ -67,59 +67,69 @@ The application is built with a fully responsive user interface using Material-U
 To get a local copy up and running, follow these steps.
 
 ### **Prerequisites**
-* Node.js (v18 or later)
-* npm
-* A MongoDB Atlas account or local MongoDB installation
+* Node.js (v18 or later recommended)
+* npm (comes with Node.js)
+* A MongoDB Atlas account (free tier available) or a local MongoDB installation
 
 ### **Installation & Setup**
 
-1.  **Clone the repo**
+1.  **Clone the Repository**
     ```sh
-    git clone [https://your-repository-url.git](https://your-repository-url.git)
+    git clone [https://your-github-repository-url.git](https://your-github-repository-url.git)
     cd student-grading-system
     ```
 
 2.  **Setup the Backend**
-    * Navigate to the backend directory:
+    * Navigate into the backend directory:
         ```sh
         cd backend
         ```
-    * Install NPM packages:
+    * Install the necessary NPM packages:
         ```sh
         npm install
         ```
-    * Create a `.env` file in the `backend` directory and add your variables:
+    * Create a `.env` file in the `backend` directory. Copy the contents of `.env.example` (if provided) or create it manually with the following variables:
         ```env
-        MONGO_URI=your_mongodb_connection_string
-        JWT_SECRET=your_jwt_secret_key
+        MONGO_URI=your_mongodb_atlas_connection_string
+        JWT_SECRET=your_super_secret_key_for_jwt_signing
+        PORT=5000
         ```
+        *Replace `your_mongodb_atlas_connection_string` with your actual connection string from MongoDB Atlas, ensuring you replace `<password>` with your database user's password.*
+        *Replace `your_super_secret_key_for_jwt_signing` with a long, random, secure string.*
 
 3.  **Setup the Frontend**
-    * Navigate to the frontend directory:
+    * Navigate into the frontend directory:
         ```sh
         cd ../frontend
         ```
-    * Install NPM packages:
+    * Install the necessary NPM packages:
         ```sh
         npm install
         ```
-    * Create a `.env` file in the `frontend` directory for local development:
+    * Create a `.env` file in the `frontend` directory with the following variable:
         ```env
         VITE_API_URL=http://localhost:5000
         ```
+        *(This tells the frontend where to find the backend API during local development.)*
 
-### **Running the Application**
+### **Running the Application Locally**
 
-1.  **Run the Backend Server**
-    * In a terminal, from the `backend` directory, run:
+1.  **Start the Backend Server**
+    * Open a terminal in the `backend` directory.
+    * Run the command:
         ```sh
         node server.js
         ```
-    * The server will start on `http://localhost:5000`.
+    * You should see output indicating the server is running on port 5000 and connected to MongoDB.
 
-2.  **Run the Frontend Development Server**
-    * In a **separate terminal**, from the `frontend` directory, run:
+2.  **Start the Frontend Development Server**
+    * Open a **separate terminal** in the `frontend` directory.
+    * Run the command:
         ```sh
         npm run dev
         ```
-    * Open your browser and navigate to `http://localhost:5173`.
+    * Open your web browser and navigate to the local URL provided (usually `http://localhost:5173`).
+
+You should now be able to interact with the application locally.
+
+---
